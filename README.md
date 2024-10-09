@@ -1,4 +1,4 @@
-10/10<br>
+10/10 (변동현)<br>
 1. App.js, App.css 변경
 
 2. components, css, pages 구조로 모듈화<br>
@@ -17,4 +17,5 @@
 5. css<br>
 - 대략적으로 css 설정. (이후 수정 필요)<br>
 
-
+- 유저, 목표 설정 CRUD 제작<br>
+- 로그인 후 MainContent 변경 -> 메인페이지로 이동
