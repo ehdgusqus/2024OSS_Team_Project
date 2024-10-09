@@ -1,0 +1,29 @@
+.first-page-footer {
+    background-color: #001529;
+    color: white; /* 글씨 색상을 흰색으로 지정 */
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .footer-row {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .social-media-icons a {
+    font-size: 24px;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .social-media-icons a:hover {
+    color: #1890ff;
+  }
+  
+  /* 모든 텍스트 요소에 대해 흰색 적용 */
+  .first-page-footer * {
+    color: white;
+  }
+  
