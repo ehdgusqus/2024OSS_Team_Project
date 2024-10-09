@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Typography, message } from 'antd';
 import axios from 'axios'; // axios로 mockAPI와 통신
@@ -7,41 +7,39 @@ import '../css/MainContent.css';
 const { Title, Text } = Typography;
 
 const MainContent = () => {
+    const [users, setUsers] = useState([]); // 사용자 데이터를 저장할 상태
+
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 API 호출
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('https://mockapi.io/your-endpoint/users');
+                setUsers(response.data); // 받은 데이터를 상태에 저장
+            } catch (error) {
+                console.error('API 요청 에러:', error);
+                message.error('사용자 데이터를 가져오는 중 오류가 발생했습니다.');
+            }
+        };
+
+        fetchUsers(); // 함수 호출
+    }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 호출
+
     const onFinish = async (values) => {
         const { email, password } = values;
 
-        try {
-            // mockAPI에서 유저 데이터를 가져옴
-            const response = await axios.get('https://mockapi.io/your-endpoint/users'); // 실제 mockAPI URL로 변경
-            const users = response.data;
+        // 이메일과 비밀번호가 일치하는 유저 찾기
+        const user = users.find(user => user.email === email && user.password === password);
 
-            // 이메일과 비밀번호가 일치하는 유저 찾기
-            const user = users.find(user => user.email === email && user.password === password);
-
-            if (user) {
-                message.success('로그인 성공!');
-                // 로그인 성공 후 추가 작업 (예: 페이지 이동)
-            } else {
-                message.error('이메일 또는 비밀번호가 일치하지 않습니다.');
-            }
-        } catch (error) {
-            console.error('API 요청 에러:', error);
-            message.error('로그인 중 오류가 발생했습니다.');
+        if (user) {
+            message.success('로그인 성공!');
+            // 로그인 성공 후 추가 작업 (예: 페이지 이동)
+        } else {
+            message.error('이메일 또는 비밀번호가 일치하지 않습니다.');
         }
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
-    };
-
-    // 구글 로그인 핸들러
-    const handleGoogleLogin = () => {
-        console.log('구글로 로그인 시도 중...');
-    };
-
-    // 네이버 로그인 핸들러
-    const handleNaverLogin = () => {
-        console.log('네이버로 로그인 시도 중...');
     };
 
     return (
@@ -85,38 +83,38 @@ const MainContent = () => {
                 <div className="social-login-buttons">
                     <Button
                         type="default"
-                        onClick={handleGoogleLogin}
+                        onClick={() => console.log('구글로 로그인 시도 중...')}
                         block
                         className="social-login google-login"
-                        style={{ backgroundColor: '#ffffff', color: '#000000' }}
                     >
                         <img
-                            src="/google-g-icon.svg" // 구글 아이콘 경로 확인
+                            src="/google-g-icon.svg"
                             alt="Google"
                             className="google-icon"
-                            style={{ marginRight: '10px' }}
                         />
                         Google
                     </Button>
 
                     <Button
                         type="default"
-                        onClick={handleNaverLogin}
+                        onClick={() => console.log('네이버로 로그인 시도 중...')}
                         block
                         className="social-login naver-login"
-                        style={{ backgroundColor: '#03C75A', color: '#ffffff' }}
                     >
-                        <span className="naver-icon" style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '18px' }}>
+                        <span className="naver-icon">
                             N
                         </span>
                         Naver
                     </Button>
                 </div>
 
-                {/* Sign Up 버튼으로 변경 */}
                 <div className="signup-link">
                     <Text><Link to="/signup">
-                        <Button type="default" block className="signup-button" style={{ marginTop: '20px' }}>
+                        <Button 
+                            type="default" 
+                            block 
+                            className="signup-button" 
+                        >
                             Sign Up
                         </Button>
                     </Link></Text>
