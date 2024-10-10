@@ -176,3 +176,30 @@ h2 {
     color: green;
     font-size: 20px;
 }
+
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.goal-header h3 {
+    margin: 0;
+}
+
+.btn-add {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-add:hover {
+    transform: scale(1.1);
+}
+
+.add {
+    display: flex;
+    align-items: center;
+}

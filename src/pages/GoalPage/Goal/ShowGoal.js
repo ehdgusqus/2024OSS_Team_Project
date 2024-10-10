@@ -62,9 +62,21 @@ const ShowGoal = () => {
             {isLoading && <Loader />}
             {error && <p className="error-message">Error: {error}</p>}
             <h2>목표 목록</h2>
+
             {inProgressGoals.length > 0 && (
                 <div className="in-progress-goals">
-                    <h3>진행 중인 목표</h3>
+                    <div className="goal-header">
+                        <h3>진행 중인 목표</h3>
+                        <div className='add'>
+                            <span>목표 추가</span>
+                            <img
+                                src="./plus_icon.png"
+                                className="btn-add"
+                                alt="목표 추가"
+                                onClick={() => navigate('/create-goal')}
+                            />
+                        </div>
+                    </div>
                     <div className="goal-list">
                         {inProgressGoals.map((goal) => (
                             <div className="goal-item" key={goal.id}>
@@ -81,8 +93,8 @@ const ShowGoal = () => {
                                     </div>
                                 </div>
                                 <div className="goal-actions">
-                                    <button className='btn-view' onClick={() => navigate(`/goal/${goal.id}`)}>상세보기</button>
-                                    <div className='btns-ed'>
+                                    <button className="btn-view" onClick={() => navigate(`/goal/${goal.id}`)}>상세보기</button>
+                                    <div className="btns-ed">
                                         <button className="btn-edit" onClick={() => navigate(`/edit-goal/${goal.id}`)}>수정</button>
                                         <button className="btn-delete" onClick={() => handleDelete(goal.id)}>삭제</button>
                                     </div>
@@ -112,8 +124,8 @@ const ShowGoal = () => {
                                     </div>
                                 </div>
                                 <div className="goal-actions">
-                                    <button className='btn-view' onClick={() => navigate(`/goal/${goal.id}`)}>상세보기</button>
-                                    <div className='btns-ed'>
+                                    <button className="btn-view" onClick={() => navigate(`/goal/${goal.id}`)}>상세보기</button>
+                                    <div className="btns-ed">
                                         <button className="btn-edit" onClick={() => navigate(`/edit-goal/${goal.id}`)}>수정</button>
                                         <button className="btn-delete" onClick={() => handleDelete(goal.id)}>삭제</button>
                                     </div>
@@ -123,8 +135,6 @@ const ShowGoal = () => {
                     </div>
                 </div>
             )}
-
-
         </div>
     );
 };
