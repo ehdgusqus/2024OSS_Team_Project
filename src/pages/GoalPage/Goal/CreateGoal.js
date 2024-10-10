@@ -1,139 +1,94 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Loader from '../Common/Loader';
 import "../../../css/Goal.css" 
+
 
 const CreateGoal = () => {
     const navigate = useNavigate();
-    const createGoalApi = "https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals"; // 올바른 API URL
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [goal, setGoal] = useState({
-        name: "",
-        description: "",
-        start_date: "",
-        end_date: "",
-        progress: "0",
-        completed: false
-    });
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [error, setError] = useState('');
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setGoal((prevGoal) => ({
-            ...prevGoal,
-            [name]: value,
-        }));
-    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setIsLoading(true);
-        setError(null);
+        if (!name || !description || !startDate || !endDate) {
+            setError('모든 필드를 채워주세요.');
+            return;
+        }
+
+        const newGoal = {
+            name,
+            description,
+            start_date: startDate,
+            end_date: endDate,
+            completed: false,  // 기본값으로 완료여부는 false로 설정
+        };
+
         try {
-            const response = await fetch(createGoalApi, {
+            const response = await fetch('https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(goal),
+                body: JSON.stringify(newGoal),
             });
 
             if (response.ok) {
-                console.log('목표가 성공적으로 생성되었습니다.');
-                setGoal({
-                    name: "",
-                    description: "",
-                    start_date: "",
-                    end_date: "",
-                    completed: false
-                });
-                navigate('/show-goal');
+                navigate('/show-goal'); // 목표 목록 페이지로 이동
             } else {
-                console.error('목표 생성에 실패했습니다.');
+                throw new Error('목표 생성에 실패했습니다.');
             }
         } catch (error) {
             setError(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     return (
-        <div className='goal-form'>
-            <div className='heading'>
-                {isLoading && <Loader />}
-                {error && <p>Error: {error}</p>}
-                <p>목표 설정</p>
-            </div>
+        <div className="create-goal">
+            <h2>목표 추가</h2>
+            {error && <p className="error-message">{error}</p>}
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">제목</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        name="name"
-                        value={goal.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3 mt-3">
-                    <label>설명</label>
-                    <textarea
-                        className="form-control"
-                        name="description"
-                        value={goal.description}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3 mt-3">
-                    <label>시작일</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        name="start_date"
-                        value={goal.start_date}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3 mt-3">
-                    <label>종료일</label>
-                    <input
-                        type="date"
-                        className="form-control"
-                        name="end_date"
-                        value={goal.end_date}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                        <label>진행률:</label>
+                <label>목표명</label>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="목표를 입력하세요"
+                />
+
+                <label>목표 설명</label>
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="목표에 대한 설명을 입력하세요"
+                />
+
+                <div className="date-wrapper">
+                    <div>
+                        <label>시작 날짜</label>
                         <input
-                            type="number"
-                            name="progress"
-                            value={goal.progress}
-                            onChange={handleInputChange}
-                            min="0"
-                            max="100"
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
                         />
                     </div>
-                <div className="mb-3">
-                    <label>완료 여부</label>
-                    <input
-                        type="checkbox"
-                        name="completed"
-                        checked={goal.completed}
-                        onChange={(e) => setGoal((prevGoal) => ({
-                            ...prevGoal,
-                            completed: e.target.checked
-                        }))}
-                    />
+                    <div>
+                        <label>종료 날짜</label>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </div>
                 </div>
-                <button type="submit" className="btn btn-primary submit-btn">설정 완료</button>
+
+                <div>
+                    <button type="submit" className="btn-submit">목표 추가</button>
+                    <button type="button" className="btn-cancel" onClick={() => navigate('/show-goal')}>취소</button>
+                </div>
             </form>
         </div>
     );
