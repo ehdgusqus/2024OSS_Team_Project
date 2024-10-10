@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Menu } from 'antd';
-import '../css/Header.css'; // 헤더 스타일
+import '../css/Header.css'; 
 
 const Header = () => {
   return (

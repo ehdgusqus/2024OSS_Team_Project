@@ -32,7 +32,7 @@ const MainContent = () => {
 
         if (user) {
             message.success('로그인 성공!');
-            // 로그인 성공 후 추가 작업 (예: 페이지 이동)
+            // 로그인 성공 후 추가 작업 (이후 페이지 이동)
         } else {
             message.error('이메일 또는 비밀번호가 일치하지 않습니다.');
         }
@@ -79,7 +79,7 @@ const MainContent = () => {
                     </Form.Item>
                 </Form>
 
-                {/* 소셜 로그인 버튼 */}
+                {/* SNS 로그인 버튼 */}
                 <div className="social-login-buttons">
                     <Button
                         type="default"
