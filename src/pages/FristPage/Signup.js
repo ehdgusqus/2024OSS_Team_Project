@@ -18,7 +18,7 @@ const SignupPage = () => {
 
       if (response.status === 201) {
         message.success('회원가입 성공!');
-        // 회원가입 성공 후 추가 작업 (예: 로그인 페이지로 이동)
+        // 회원가입 성공 후 추가 작업 (이후 로그인 페이지로 이동)
       } else {
         message.error('회원가입에 실패했습니다.');
       }
