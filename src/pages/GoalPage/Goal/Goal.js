@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Loader from '../Common/Loader';
-import "../../../css/Goal.css" 
+import "../../../css/Goal.css";
 
 const Goal = () => {
     const { id } = useParams();
@@ -89,6 +89,15 @@ const Goal = () => {
         }
     };
 
+    const handleCompletedChange = (e) => {
+        const isCompleted = e.target.checked;
+        setGoal((prevGoal) => ({
+            ...prevGoal,
+            completed: isCompleted,
+            progress: isCompleted ? 100 : prevGoal.progress, 
+        }));
+    };
+
     if (isLoading) {
         return <Loader />;
     }
@@ -147,12 +156,7 @@ const Goal = () => {
                             type="checkbox"
                             name="completed"
                             checked={goal.completed}
-                            onChange={(e) =>
-                                setGoal((prevGoal) => ({
-                                    ...prevGoal,
-                                    completed: e.target.checked,
-                                }))
-                            }
+                            onChange={handleCompletedChange}
                         />
                     </div>
                     <div>
@@ -164,6 +168,7 @@ const Goal = () => {
                             onChange={handleInputChange}
                             min="0"
                             max="100"
+                            disabled={goal.completed}
                         />
                     </div>
                     <button onClick={handleSaveClick} className="btn-save">저장</button>
@@ -174,7 +179,8 @@ const Goal = () => {
                     <p><strong>설명:</strong> {goal.description}</p>
                     <p><strong>시작일:</strong> {goal.start_date}</p>
                     <p><strong>종료일:</strong> {goal.end_date}</p>
-                    <p><strong>완료 여부:</strong></p> {goal.completed ? (
+                    <p><strong>완료 여부:</strong> {goal.completed ? "" : "진행 중"}</p> 
+                    {goal.completed ? (
                         <p><strong>완료</strong></p>
                     ) : (
                         <div>
@@ -182,12 +188,19 @@ const Goal = () => {
                             <progress value={goal.progress} max="100"></progress>
                         </div>
                     )}
-                    <button onClick={handleEditClick} className="btn-edit">수정</button>
-                    <button onClick={handleDeleteClick} className="btn-delete">삭제</button>
+                    <div className='btns'>
+                        <div className='btn-show'>
+                            <Link to="/show-goal" className="back-link">목록 보기</Link>
+                        </div>
+                        <div className='btns-edit'>
+                            <button onClick={handleEditClick} className="btn-edit">수정</button>
+                            <button onClick={handleDeleteClick} className="btn-delete">삭제</button>
+                        </div>
+
+                    </div>
                 </>
             )}
 
-            <Link to="/show-goal" className="back-link">목록 보기</Link>
         </div>
     );
 };

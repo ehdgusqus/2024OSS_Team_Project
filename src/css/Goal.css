@@ -54,15 +54,33 @@
     transition: background-color 0.3s;
 }
 
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn-show {
+    flex: 1;
+}
+
+.btns-edit {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+
 .goal-detail button:hover {
     background-color: #45a049;
 }
 
-.goal-detail .delete-btn {
+.goal-detail .btn-delete {
     background-color: #f44336;
 }
 
-.goal-detail .delete-btn:hover {
+.goal-detail .btn-delete:hover {
     background-color: #e53935;
 }
 
