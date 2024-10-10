@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Common/Loader';
-import "./ShowGoal.css";
+import "../../../css/ShowGoal.css" 
 
 const ShowGoal = () => {
     const navigate = useNavigate();

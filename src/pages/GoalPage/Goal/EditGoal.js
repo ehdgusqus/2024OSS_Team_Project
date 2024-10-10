@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Loader from '../Common/Loader';
-import "./Goal.css" 
+import "../../../css/Goal.css" 
 
 const EditGoal = () => {
     const navigate = useNavigate();

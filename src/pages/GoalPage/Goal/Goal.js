@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Loader from '../Common/Loader';
-import "./Goal.css";
+import "../../../css/Goal.css" 
 
 const Goal = () => {
     const { id } = useParams();
