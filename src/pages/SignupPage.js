@@ -6,14 +6,18 @@ const { Title } = Typography;
 
 const SignupPage = () => {
   const onFinish = async (values) => {
-    const { email, password, name } = values;
+    const { email, password, name, user_id, location } = values;
 
     try {
       // mockAPI에 유저 데이터를 추가
-      const response = await axios.post('https://mockapi.io/your-endpoint/users', {
+      const response = await axios.post('https://670367bbbd7c8c1ccd414d3f.mockapi.io/api/oss_Data/users', {
+        user_id, 
         email,
         password,
         name,
+        location, 
+        profile_image: '', // 이미지 URL을 비워두거나 나중에 처리
+        created_at: new Date().toISOString() // 현재 날짜
       });
 
       if (response.status === 201) {
@@ -46,6 +50,14 @@ const SignupPage = () => {
         className="signup-form"
       >
         <Form.Item
+          label="아이디"
+          name="user_id"
+          rules={[{ required: true, message: '아이디를 입력하세요!' }]}
+        >
+          <Input placeholder="아이디를 입력하세요" />
+        </Form.Item>
+
+        <Form.Item
           label="이름"
           name="name"
           rules={[{ required: true, message: '이름을 입력하세요!' }]}
@@ -59,6 +71,14 @@ const SignupPage = () => {
           rules={[{ required: true, message: '이메일을 입력하세요!' }]}
         >
           <Input placeholder="이메일을 입력하세요" />
+        </Form.Item>
+
+        <Form.Item
+          label="위치"
+          name="location"
+          rules={[{ required: true, message: '위치를 입력하세요!' }]}
+        >
+          <Input placeholder="위치를 입력하세요" />
         </Form.Item>
 
         <Form.Item

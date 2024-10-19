@@ -1,30 +1,18 @@
 import React from 'react';
-import { Row, Col, Menu } from 'antd';
-import '../css/Header.css'; 
+import { Link } from 'react-router-dom'; // Link 컴포넌트 추가
+import { Layout, Typography } from 'antd';
 
-const Header = () => {
-  return (
-    <header className="first-page-header">
-      <Row justify="space-between" align="middle" className="header-row">
-        <Col>
-          <div className="logo">EcoHabit</div>
-        </Col>
-        <Col>
-          <Menu mode="horizontal" className="navigation-menu">
-            <Menu.Item key="home">
-              <a href="/">Home</a>
-            </Menu.Item>
-            <Menu.Item key="about">
-              <a href="/about">About</a>
-            </Menu.Item>
-            <Menu.Item key="contact">
-              <a href="/contact">Contact</a>
-            </Menu.Item>
-          </Menu>
-        </Col>
-      </Row>
-    </header>
-  );
+const { Header } = Layout;
+const { Title } = Typography;
+
+const AppHeader = ({ setIsLoggedIn }) => {
+    return (
+        <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#001529' }}>
+            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}> 
+                <Title level={2} style={{ color: 'white', margin: 0 }}>EcoHabit</Title>
+            </Link>
+        </Header>
+    );
 };
 
-export default Header;
+export default AppHeader;
