@@ -1,8 +1,10 @@
+// src/pages/UserManagement.js
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Input, message } from 'antd';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../api/userAPI'; // API 호출 함수
+import { useNavigate } from 'react-router-dom';
 
-const UserManagement = () => {
+const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 설정하는 props 추가
     const [users, setUsers] = useState([]);
     const [form] = Form.useForm();
     const [editingUserId, setEditingUserId] = useState(null); // 편집 중인 사용자 ID
@@ -24,7 +26,7 @@ const UserManagement = () => {
     const onFinish = async (values) => {
         try {
             if (editingUserId) {
-                await updateUser(editingUserId, values); // 수정 시 user_id 사용
+                await updateUser(editingUserId, values); // 수정 시 id 사용
                 message.success('사용자 정보 수정 성공!');
                 setEditingUserId(null); // 편집 모드 종료
             } else {
@@ -40,7 +42,7 @@ const UserManagement = () => {
     };
 
     const handleEdit = (userId) => {
-        const user = users.find((u) => u.user_id === userId);
+        const user = users.find((u) => u.id === userId); // id로 사용자 찾기
         if (user) {
             form.setFieldsValue(user);
             setEditingUserId(userId); // 편집 중인 사용자 ID 설정
@@ -58,6 +60,11 @@ const UserManagement = () => {
             message.error('사용자 삭제 실패!');
             console.error(error);
         }
+    };
+
+    const handleSelectUser = (userId) => {
+        setSelectedUserId(userId); // 선택된 유저 ID를 설정
+        // 메인 페이지로 이동 (선택 후)
     };
 
     return (
@@ -83,7 +90,7 @@ const UserManagement = () => {
                 </Form.Item>
             </Form>
 
-            <Table dataSource={users} rowKey="user_id">
+            <Table dataSource={users} rowKey="id"> {/* id 사용 */}
                 <Table.Column title="사용자 ID" dataIndex="user_id" />
                 <Table.Column title="이름" dataIndex="name" />
                 <Table.Column title="이메일" dataIndex="email" />
@@ -94,8 +101,9 @@ const UserManagement = () => {
                     title="작업"
                     render={(text, record) => (
                         <>
-                            <Button onClick={() => handleEdit(record.user_id)}>수정</Button>
-                            <Button onClick={() => handleDelete(record.user_id)} danger>삭제</Button>
+                            <Button onClick={() => handleEdit(record.id)}>수정</Button> {/* id 사용 */}
+                            <Button onClick={() => handleDelete(record.id)} danger>삭제</Button> {/* id 사용 */}
+                            <Button onClick={() => handleSelectUser(record.user_id)}>선택</Button>
                         </>
                     )}
                 />
