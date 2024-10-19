@@ -4,47 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateCommunity = () => {
     const navigate = useNavigate();
-    const [userIdSearch, setUserIdSearch] = useState('');
-    const [userResults, setUserResults] = useState([]);
-    const [selectedParticipants, setSelectedParticipants] = useState([]);
+    const [creator, setCreator] = useState([]);
+    const [participant, setParticipant] = useState([]);
     const [communityName, setCommunityName] = useState('');
     const [communityDescription, setCommunityDescription] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch('https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/users');
-                const data = await response.json();
-                setUsers(data);
-            } catch (error) {
-                console.error('사용자 데이터 로드 실패', error);
-            }
-        };
-
-        fetchUsers();
-    }, []);
-
-    const handleSearch = () => {
-        if (userIdSearch.trim() === '') return;
-
-        setIsLoading(true);
-        const filteredUsers = users.filter((user) =>
-            user.user_id && user.user_id.includes(userIdSearch)
-        );
-
-        setUserResults(filteredUsers);
-        setIsLoading(false);
-    };
-
-    const handleAddParticipant = (userId) => {
-        if (!selectedParticipants.some((participant) => participant.user_id === userId)) {
-            setSelectedParticipants([...selectedParticipants, { user_id: userId, progress: 0 }]);
-        }
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -54,7 +20,8 @@ const CreateCommunity = () => {
             goal_description: communityDescription,
             progress: 0,
             completed: false,
-            participants: selectedParticipants,
+            creator_id: creator,
+            participants: participant,
             start_date: startDate,
             end_date: endDate,
         };
@@ -115,40 +82,23 @@ const CreateCommunity = () => {
                 required
             />
 
-            <div>
-                <label>참여자 검색</label>
-                <input
-                    type="text"
-                    value={userIdSearch}
-                    onChange={(e) => setUserIdSearch(e.target.value)}
-                    placeholder="사용자 ID로 검색"
-                />
-                <button onClick={handleSearch} disabled={isLoading}>
-                    {isLoading ? '검색 중...' : '검색'}
-                </button>
-            </div>
+            <label>설립자</label>
+            <input
+                type="text"
+                value={creator}
+                onChange={(e) => setCreator(e.target.value)}
+                placeholder="커뮤니티 설립자"
+                required
+            />
 
-            {userResults.length > 0 && (
-                <div className="user-results">
-                    <h3>검색된 사용자</h3>
-                    <ul>
-                        {userResults.map((user) => (
-                            <li key={user.user_id}>
-                                {user.user_id} <button onClick={() => handleAddParticipant(user.user_id)}>참여자로 추가</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            <div>
-                <h3>참여자 목록</h3>
-                <ul>
-                    {selectedParticipants.map((participant, index) => (
-                        <li key={index}>{participant.user_id}</li>
-                    ))}
-                </ul>
-            </div>
+            <label>참여자</label>
+            <input
+                type="text"
+                value={participant}
+                onChange={(e) => setParticipant(e.target.value)}
+                placeholder="','로 참여자 구분"
+                required
+            />
 
             <div className='btns'>
                 <button type="button" className="btn-cancel" onClick={() => navigate('/show-community')}>취소</button>

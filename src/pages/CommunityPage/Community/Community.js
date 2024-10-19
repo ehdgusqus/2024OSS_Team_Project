@@ -4,28 +4,25 @@ import Loader from '../Common/Loader';
 import '../../../css/Community.css';
 
 const Community = () => {
-    const { goal_id } = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [community, setCommunity] = useState(null);
     const [originalCommunity, setOriginalCommunity] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    
 
     const fetchCommunity = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch('https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community');
+            console.log(`Fetching community with ID: ${id}`);
+            const response = await fetch(`https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community/${id}`);
             if (!response.ok) throw new Error('커뮤니티 데이터를 불러오는 데 실패했습니다.');
             const data = await response.json();
-
-            const selectedCommunity = data.find(community => community.goal_id === parseInt(goal_id));
-            if (!selectedCommunity) {
-                throw new Error('해당 커뮤니티를 찾을 수 없습니다.');
-            }
-
-            setCommunity(selectedCommunity);
-            setOriginalCommunity({ ...selectedCommunity });
+    
+            setCommunity(data);
+            setOriginalCommunity({ ...data });
         } catch (error) {
             setError(error.message);
         } finally {
@@ -36,7 +33,7 @@ const Community = () => {
 
     useEffect(() => {
         fetchCommunity();
-    }, [goal_id]);
+    }, [id]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -55,25 +52,16 @@ const Community = () => {
         setIsEditing(false);
     };
 
-    
     const handleSaveClick = async () => {
         try {
             setIsLoading(true);
 
-            const totalProgress = community.participants.reduce((total, participant) => total + participant.progress, 0);
-            const overallProgress = totalProgress / community.participants.length;
-
-            const updatedCommunity = {
-                ...community,
-                progress: overallProgress,
-            };
-
-            const response = await fetch(`https://api.example.com/community/${goal_id}`, {
+            const response = await fetch(`https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedCommunity),
+                body: JSON.stringify(community),
             });
 
             if (response.ok) {
@@ -89,12 +77,13 @@ const Community = () => {
         }
     };
 
+
     const handleDeleteClick = async () => {
         const confirmDelete = window.confirm("이 커뮤니티를 삭제하시겠습니까?");
         if (confirmDelete) {
             try {
                 setIsLoading(true);
-                const response = await fetch(`https://api.example.com/community/${goal_id}`, {
+                const response = await fetch(`https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community/${id}`, {
                     method: 'DELETE',
                 });
 
@@ -111,24 +100,13 @@ const Community = () => {
             }
         }
     };
-    const calculateOverallProgress = (community) => {
-        if (community.participants.length === 0) return 0;
-        const totalProgress = community.participants.reduce((total, participant) => total + participant.progress, 0);
-        return totalProgress / community.participants.length;
-    };
+
     const handleCompletedChange = (e) => {
         const isCompleted = e.target.checked;
         setCommunity((prevCommunity) => ({
             ...prevCommunity,
             completed: isCompleted,
             progress: isCompleted ? 100 : prevCommunity.progress,
-        }));
-    };
-
-    const handleRemoveParticipant = (index) => {
-        setCommunity((prevCommunity) => ({
-            ...prevCommunity,
-            participants: prevCommunity.participants.filter((_, i) => i !== index),
         }));
     };
 
@@ -146,7 +124,7 @@ const Community = () => {
 
     return (
         <div className="community-detail">
-            <h1>Community details</h1>
+            <h1>Community 정보</h1>
             {isEditing ? (
                 <>
                     <div>
@@ -185,17 +163,20 @@ const Community = () => {
                         />
                     </div>
                     <div>
-                        <label>참여자 목록</label>
-                        <ul>
-                            {community.participants.map((participant, index) => (
-                                <li key={index}>
-                                    <div className='edit-user'>
-                                        <p>{participant.user_id} - 진행률: {participant.progress}%</p>
-                                        <button className='del-user' onClick={() => handleRemoveParticipant(index)}>삭제</button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                        <label>설립자</label>
+                        <input
+                            type="text"
+                            name="creator_id"
+                            value={community.creator_id}
+                            onChange={handleInputChange}
+                        />
+                        <label>참여자</label>
+                        <input
+                            type="text"
+                            name="participants"
+                            value={community.participants}
+                            onChange={handleInputChange}
+                        />
                     </div>
                     <div>
                         <label>완료 여부</label>
@@ -229,29 +210,16 @@ const Community = () => {
                     <p><strong>설명:</strong> {community.goal_description}</p>
                     <p><strong>시작일:</strong> {community.start_date}</p>
                     <p><strong>종료일:</strong> {community.end_date}</p>
-                    <p><strong>참여자:</strong></p>
-                    <div className='participant-list'>
-                        <ul>
-                            {community.participants.map((participant, index) => (
-                                <li key={index}>
-                                    <p className='userId'><strong>[{participant.user_id}]</strong></p>
-                                    <div className='user-details'>
-                                        <p> -진행률: {participant.progress}%</p>
-                                        {/* <p> -활동 유형: {participant.activity_type}</p>
-                                        <p> -참여 커뮤니티: {participant.participating_communities.join(', ')}</p> */}
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <p><strong>설립자:</strong> {community.creator_id}</p>
+                    <p><strong>참여자:</strong> {community.participants}</p>
                     <p><strong>완료 여부:</strong> {community.completed ? "완료됨" : "진행 중"}</p>
                     <div className="community-progress">
-                        <p>전체 진행률: {calculateOverallProgress(community)}%</p>
+                        <p>진행률: {community.progress}%</p>
                         <div className="progress-bar">
                             <div
                                 className="progress-bar-fill"
                                 style={{
-                                    width: `${calculateOverallProgress(community)}%`,
+                                    width: `${community.progress}%`,
                                     backgroundColor: '#4caf50',
                                     height: '20px',
                                     borderRadius: '5px',

@@ -43,18 +43,7 @@ const ShowGoal = () => {
             <div className='goals-list'>
                 {inProgressGoals.length > 0 && (
                     <div className="in-progress-goals">
-                        <div className="goal-header">
-                            {/* <h3>진행 중인 목표</h3> */}
-                            {/* <div className='add'> */}
-                                {/* <span>목표 추가</span> */}
-                                {/* <img
-                                    src="./plus_icon.png"
-                                    className="btn-add"
-                                    alt="목표 추가"
-                                    onClick={() => navigate('/create-goal')}
-                                /> */}
-                            {/* </div> */}
-                        </div>
+                        
                         <div className="goal-list">
                             {inProgressGoals.map((goal) => (
                                 <div
@@ -82,7 +71,6 @@ const ShowGoal = () => {
                 )}
                 {completedGoals.length > 0 && (
                     <div className="completed-goals">
-                        {/* <h3>완료된 목표</h3> */}
                         <div className="goal-list">
                             {completedGoals.map((goal) => (
                                 <div
