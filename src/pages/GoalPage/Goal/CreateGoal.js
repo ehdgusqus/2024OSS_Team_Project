@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "../../../css/Goal.css" 
 
-
 const CreateGoal = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
@@ -22,9 +21,10 @@ const CreateGoal = () => {
         const newGoal = {
             name,
             description,
+            progress:0,
             start_date: startDate,
             end_date: endDate,
-            completed: false,  // 기본값으로 완료여부는 false로 설정
+            completed: false,
         };
 
         try {
@@ -37,7 +37,7 @@ const CreateGoal = () => {
             });
 
             if (response.ok) {
-                navigate('/show-goal'); // 목표 목록 페이지로 이동
+                navigate('/show-goal');
             } else {
                 throw new Error('목표 생성에 실패했습니다.');
             }
@@ -85,9 +85,10 @@ const CreateGoal = () => {
                     </div>
                 </div>
 
-                <div>
-                    <button type="submit" className="btn-submit">목표 추가</button>
+                <div className='btns'>
                     <button type="button" className="btn-cancel" onClick={() => navigate('/show-goal')}>취소</button>
+                    <button type="submit" className="btn-submit">목표 추가</button>
+
                 </div>
             </form>
         </div>

@@ -1,115 +1,114 @@
 /* CreateGoal.css */
 .create-goal {
-    width: 100%;
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+input,
+textarea {
+  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+}
+
+.date-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-wrapper div {
+  flex-basis: 48%;
+}
+
+input[type="date"] {
+  padding: 10px;
+}
+
+button {
+  font-size: 16px;
+  padding: 12px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background-color: #4CAF50;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #45a049;
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.btn-cancel:hover {
+  background-color: #e53935;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .create-goal {
+    padding: 20px;
   }
-  
-  h2 {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
+
+  .date-wrapper {
     flex-direction: column;
   }
-  
-  label {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #333;
+
+  .date-wrapper div {
+    flex-basis: 100%;
+    margin-bottom: 10px;
   }
-  
-  input,
-  textarea {
-    font-size: 16px;
-    padding: 12px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+
+  button {
     width: 100%;
   }
-  
-  textarea {
-    height: 120px;
-    resize: none;
-  }
-  
-  .date-wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .date-wrapper div {
-    flex-basis: 48%;
-  }
-  
-  input[type="date"] {
-    padding: 10px;
-  }
-  
-  button {
-    font-size: 16px;
-    padding: 12px;
-    margin-top: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .btn-submit {
-    background-color: #4CAF50;
-    color: white;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-submit:hover {
-    background-color: #45a049;
-  }
-  
-  .btn-cancel {
-    background-color: #f44336;
-    color: white;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
-  }
-  
-  .btn-cancel:hover {
-    background-color: #e53935;
-  }
-  
-  .error-message {
-    color: #f44336;
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .create-goal {
-      padding: 20px;
-    }
-  
-    .date-wrapper {
-      flex-direction: column;
-    }
-  
-    .date-wrapper div {
-      flex-basis: 100%;
-      margin-bottom: 10px;
-    }
-  
-    button {
-      width: 100%;
-    }
-  }
-  
+}
