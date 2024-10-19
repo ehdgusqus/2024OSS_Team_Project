@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout'; 
 import MainPage from './pages/MainPage'; 
@@ -7,12 +7,14 @@ import SignupPage from './pages/SignupPage';
 import UserManagement from './pages/UserManagement'; // UserManagement 컴포넌트 추가
 
 function App() {
+    const [selectedUserId, setSelectedUserId] = useState(null); // 선택된 유저 ID 상태 추가
+
     return (
         <Router>
             <Routes>
                 <Route path="/" element={
                     <MainLayout>
-                        <MainPage />
+                        <MainPage selectedUserId={selectedUserId} /> {/* 선택된 유저 ID 전달 */}
                     </MainLayout>
                 } />
                 <Route path="/signup" element={
@@ -27,7 +29,7 @@ function App() {
                 } />
                 <Route path="/user-management" element={
                     <MainLayout>
-                        <UserManagement /> {/* UserManagement 페이지 연결 */}
+                        <UserManagement setSelectedUserId={setSelectedUserId} /> {/* 선택된 유저 ID 설정하는 함수 전달 */}
                     </MainLayout>
                 } />
             </Routes>
