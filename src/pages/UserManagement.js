@@ -1,16 +1,15 @@
-// src/pages/UserManagement.js
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Input, message } from 'antd';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../api/userAPI'; // API 호출 함수
 
-const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 설정하는 props 추가
+const UserManagement = ({ setSelectedUserId }) => {
     const [users, setUsers] = useState([]);
     const [form] = Form.useForm();
     const [editingUserId, setEditingUserId] = useState(null); // 편집 중인 사용자 ID
 
     useEffect(() => {
         loadUsers();
-    }, []);
+    }, []); // 빈 배열로 설정하여 컴포넌트가 마운트될 때만 호출
 
     const loadUsers = async () => {
         try {
@@ -90,7 +89,7 @@ const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 �
             </Form>
 
             <Table dataSource={users} rowKey="id"> {/* id 사용 */}
-                <Table.Column title="사용자 ID" dataIndex="user_id" />
+                <Table.Column title="사용자 ID" dataIndex="id" /> {/* 'user_id'에서 'id'로 수정 */}
                 <Table.Column title="이름" dataIndex="name" />
                 <Table.Column title="이메일" dataIndex="email" />
                 <Table.Column title="위치" dataIndex="location" />
@@ -102,7 +101,7 @@ const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 �
                         <>
                             <Button onClick={() => handleEdit(record.id)}>수정</Button> {/* id 사용 */}
                             <Button onClick={() => handleDelete(record.id)} danger>삭제</Button> {/* id 사용 */}
-                            <Button onClick={() => handleSelectUser(record.user_id)}>선택</Button>
+                            <Button onClick={() => handleSelectUser(record.id)}>선택</Button> {/* id 사용 */}
                         </>
                     )}
                 />
