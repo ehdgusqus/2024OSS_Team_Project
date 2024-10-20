@@ -1,3 +1,4 @@
+// src/pages/GoalEdit.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, message, Spin } from 'antd'; 
@@ -10,25 +11,24 @@ const GoalEdit = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchGoal = async () => {
-        try {
-            const response = await fetch(`https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals/${id}`);
-            if (!response.ok) {
-                throw new Error('목표 데이터를 불러오는 데 실패했습니다.');
-            }
-            const data = await response.json();
-            setGoal(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
+        const fetchGoal = async () => {
+            try {
+                const response = await fetch(`https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals/${id}`);
+                if (!response.ok) {
+                    throw new Error('목표 데이터를 불러오는 데 실패했습니다.');
+                }
+                const data = await response.json();
+                setGoal(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchGoal();
-    }, [fetchGoal]); 
-    
+    }, [id]); 
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -60,7 +60,7 @@ const GoalEdit = () => {
     };
 
     if (isLoading) {
-        return <Spin tip="로딩 중..." />; // 로딩 중일 때 스피너 표시
+        return <Spin tip="로딩 중..." />; 
     }
 
     if (error) {

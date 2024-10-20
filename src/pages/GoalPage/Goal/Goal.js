@@ -1,3 +1,4 @@
+// src/pages/Goal.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loader from '../Common/Loader';
@@ -10,26 +11,25 @@ const Goal = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchGoal = async () => {
-        try {
-            const response = await fetch(`https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals/${id}`);
-            if (!response.ok) {
-                throw new Error('목표 데이터를 불러오는 데 실패했습니다.');
-            }
-            const data = await response.json();
-            setGoal(data);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchGoal();
-    }, [fetchGoal]); 
-    
+        const fetchGoal = async () => {
+            try {
+                const response = await fetch(`https://66ff38202b9aac9c997e8f49.mockapi.io/api/oss/goals/${id}`);
+                if (!response.ok) {
+                    throw new Error('목표 데이터를 불러오는 데 실패했습니다.');
+                }
+                const data = await response.json();
+                setGoal(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
+        fetchGoal();
+    }, [id]); // id를 의존성으로 추가
+    
     const handleDeleteClick = async () => {
         const confirmDelete = window.confirm("이 목표를 삭제하시겠습니까?");
         if (confirmDelete) {
@@ -78,6 +78,7 @@ const Goal = () => {
             )}
             <div className="btns">
                 <button onClick={() => navigate('/goals')} className="btn-go-list">목록으로 이동</button>
+                <button onClick={handleDeleteClick} className="btn-delete">삭제</button>
             </div>
         </div>
     );
