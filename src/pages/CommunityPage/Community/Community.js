@@ -12,27 +12,27 @@ const Community = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    
-    const fetchCommunity = async () => {
-        try {
-            setIsLoading(true);
-            const response = await fetch(`https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community/${id}`);
-            if (!response.ok) throw new Error('커뮤니티 데이터를 불러오는 데 실패했습니다.');
-            const data = await response.json();
-    
-            setCommunity(data);
-            setOriginalCommunity({ ...data });
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
+    // useEffect 내에서 fetchCommunity 함수를 정의합니다.
     useEffect(() => {
+        const fetchCommunity = async () => {
+            try {
+                setIsLoading(true);
+                const response = await fetch(`https://6707ed888e86a8d9e42d8057.mockapi.io/api/oss/community/${id}`);
+                if (!response.ok) throw new Error('커뮤니티 데이터를 불러오는 데 실패했습니다.');
+                const data = await response.json();
+
+                setCommunity(data);
+                setOriginalCommunity({ ...data });
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         fetchCommunity();
-    }, [fetchCommunity]); 
-    
+    }, [id]); // id를 의존성으로 추가
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
