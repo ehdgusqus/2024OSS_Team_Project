@@ -13,15 +13,8 @@ const WasteManagementDataApi = () => {
           '/sds/JsonApi.do?PID=NTN001&YEAR=2019&USRID=jamie123&KEY=KZMLYLCT2O96ZVGF9UD3F2IC7FY6G8CKVPJXAOJU7RXDO'
         );
         const jsonData = await response.json();
-        
-        console.log("API에서 받아온 데이터:", jsonData); 
-        
-        if (jsonData && jsonData.data) {
-          setWasteData(jsonData.data);
-          console.log("추출된 데이터:", jsonData.data);
-        } else {
-          console.error('잘못된 데이터 형식:', jsonData);
-        }
+
+        setWasteData(jsonData.data);
       } catch (error) {
         console.error('데이터를 가져오는 중 오류 발생:', error);
       }
