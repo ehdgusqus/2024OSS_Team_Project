@@ -76,15 +76,8 @@ const Goal = () => {
             {goal.completed && (
                 <p><strong>진행률:</strong> {goal.progress}%</p>
             )}
-            <div className='btns'>
-                <EditOutlined
-                    onClick={() => navigate(`/goal/edit-goal/${goal.id}`)} // 수정 페이지로 이동
-                    style={{ color: 'blue', fontSize: '24px', marginRight: '10px', cursor: 'pointer' }}
-                />
-                <DeleteOutlined
-                    onClick={handleDeleteClick}
-                    style={{ color: 'red', fontSize: '24px', cursor: 'pointer' }}
-                />
+            <div className="btns">
+                <button onClick={() => navigate('/goals')} className="btn-go-list">목록으로 이동</button>
             </div>
         </div>
     );
