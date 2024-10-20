@@ -12,6 +12,7 @@ import GoalEdit from './pages/GoalPage/Goal/GoalEdit';
 import ShowCommunity from './pages/CommunityPage/Community/ShowCommunity';
 import CreateCommunity from './pages/CommunityPage/Community/CreateCommunity';
 import CommunityEdit from './pages/CommunityPage/Community/CommunityEdit';
+import Community from './pages/CommunityPage/Community/Community';
 
 function App() {
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -67,6 +68,11 @@ function App() {
                 <Route path="/create-community" element={
                     <MainLayout>
                         <CreateCommunity />
+                    </MainLayout>
+                } />
+                <Route path="/community/:id" element={
+                    <MainLayout>
+                        <Community />
                     </MainLayout>
                 } />
                 <Route path="/edit-community/:id" element={
