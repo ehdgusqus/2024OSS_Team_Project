@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Loader from '../Common/Loader';
 import "../../../css/Goal.css";
 
@@ -28,7 +27,8 @@ const Goal = () => {
 
     useEffect(() => {
         fetchGoal();
-    }, [id]);
+    }, [fetchGoal]); 
+    
 
     const handleDeleteClick = async () => {
         const confirmDelete = window.confirm("이 목표를 삭제하시겠습니까?");

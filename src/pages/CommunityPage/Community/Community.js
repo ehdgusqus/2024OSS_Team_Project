@@ -31,7 +31,8 @@ const Community = () => {
 
     useEffect(() => {
         fetchCommunity();
-    }, [id]);
+    }, [fetchCommunity]); 
+    
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;

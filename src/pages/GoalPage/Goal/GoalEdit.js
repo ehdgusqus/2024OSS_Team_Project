@@ -27,7 +27,8 @@ const GoalEdit = () => {
 
     useEffect(() => {
         fetchGoal();
-    }, [id]);
+    }, [fetchGoal]); 
+    
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;

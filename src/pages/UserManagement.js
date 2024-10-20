@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Input, message } from 'antd';
 import { fetchUsers, createUser, updateUser, deleteUser } from '../api/userAPI'; // API 호출 함수
-import { useNavigate } from 'react-router-dom';
 
 const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 설정하는 props 추가
     const [users, setUsers] = useState([]);
