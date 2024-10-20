@@ -96,7 +96,7 @@ const UserManagement = ({ setSelectedUserId }) => { // 선택된 유저 ID를 �
                 <Table.Column title="이메일" dataIndex="email" />
                 <Table.Column title="위치" dataIndex="location" />
                 <Table.Column title="Eco Score" dataIndex="eco_score" />
-                <Table.Column title="생성일" dataIndex="created_at" render={(text) => new Date(text).toLocaleDateString()} />
+    
                 <Table.Column
                     title="작업"
                     render={(text, record) => (
