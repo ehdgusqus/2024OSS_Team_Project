@@ -13,6 +13,8 @@ import ShowCommunity from './pages/CommunityPage/Community/ShowCommunity';
 import CreateCommunity from './pages/CommunityPage/Community/CreateCommunity';
 import CommunityEdit from './pages/CommunityPage/Community/CommunityEdit';
 import Community from './pages/CommunityPage/Community/Community';
+import WasteManagementData from './pages/WastePage/WasteManagementData'; 
+import WasteChartPage from './pages/WastePage/WasteChartPage'; 
 
 function App() {
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -80,6 +82,12 @@ function App() {
                         <CommunityEdit /> 
                     </MainLayout>
                 } />
+                <Route path="/waste-management" element={ 
+                    <MainLayout>
+                        <WasteManagementData />
+                    </MainLayout>
+                } />
+                <Route path="/waste-chart/:cityName" element={<WasteChartPage />} /> 
             </Routes>
         </Router>
     );
