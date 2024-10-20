@@ -34,11 +34,11 @@ const ShowCommunity = () => {
     );
 
     const handleCommunityClick = (id) => {
-        navigate(`/community/${id}`); // 상세 페이지로 이동
+        navigate(`/community/${id}`);
     };
 
     const handleEditClick = (id) => {
-        navigate(`/edit-community/${id}`); // 수정 페이지로 이동
+        navigate(`/edit-community/${id}`); 
     };
 
     const handleDeleteClick = async (id) => {
@@ -82,7 +82,7 @@ const ShowCommunity = () => {
                     <div
                         className="community-item"
                         key={community.id}
-                        onClick={() => handleCommunityClick(community.id)} // 클릭 시 상세 페이지로 이동
+                        onClick={() => handleCommunityClick(community.id)} 
                     >
                         <div className='contents'>
                             <h3>{community.goal_name}</h3>
@@ -90,7 +90,7 @@ const ShowCommunity = () => {
                             <p>[Creator] {community.creator_id}</p>
                             <p>[Members] {community.participants}</p>
                             <div>
-                                <span className="community-progress">{community.progress}% 진행중</span>
+                                <span className="community-progress">진행률: {community.progress}%</span>
                             </div>
                             <p>기간: {community.start_date} ~ {community.end_date}</p>
                         </div>

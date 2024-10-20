@@ -69,7 +69,6 @@ h2 {
     margin-right: 5px;
 }
 
-/* Optional: separate the in-progress and completed goals */
 .in-progress-goals {
     margin-bottom: 20px;
 }
@@ -78,7 +77,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .goals-list {
         padding: 15px;

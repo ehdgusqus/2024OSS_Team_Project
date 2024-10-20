@@ -97,6 +97,15 @@ const Community = () => {
         }
     };
 
+    const handleCompletedChange = (e) => {
+        const isCompleted = e.target.checked;
+        setCommunity((prevCommunity) => ({
+            ...prevCommunity,
+            completed: isCompleted,
+            progress: isCompleted ? 100 : prevCommunity.progress,
+        }));
+    };
+
     if (isLoading) {
         return <Loader />;
     }
@@ -171,7 +180,7 @@ const Community = () => {
                             type="checkbox"
                             name="completed"
                             checked={community.completed}
-                            onChange={handleInputChange}
+                            onChange={handleCompletedChange}
                         />
                     </div>
                     <div>
