@@ -34,7 +34,7 @@ const ShowCommunity = () => {
     );
 
     const handleCommunityClick = (id) => {
-        navigate(`/community/${id}`);
+        navigate(`/community/${id}`); // 상세 페이지로 이동
     };
 
     const handleEditClick = (id) => {
@@ -64,6 +64,8 @@ const ShowCommunity = () => {
     return (
         <div className="community-container">
             <h2>Communities</h2>
+            {isLoading && <Loader />}
+            {error && <p className="error-message">Error: {error}</p>}
             <input
                 type="text"
                 className="search-input"
@@ -78,9 +80,9 @@ const ShowCommunity = () => {
             <div className="community-list">
                 {filteredCommunities.length > 0 ? filteredCommunities.map((community) => (
                     <div
-                        className="community-item community-columns"
+                        className="community-item"
                         key={community.id}
-                        onClick={() => handleCommunityClick(community.id)}
+                        onClick={() => handleCommunityClick(community.id)} // 클릭 시 상세 페이지로 이동
                     >
                         <div className='contents'>
                             <h3>{community.goal_name}</h3>
